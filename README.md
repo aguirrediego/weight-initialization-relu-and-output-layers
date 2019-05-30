@@ -11,5 +11,5 @@ the squared error in the initialization set. We evaluate our method on popular a
 and faster convergence rates are achieved on the ImageNet data set when compared to state-of-the-art initialization 
 techniques (LSUV, He, and Glorot).
 
-In this repository, you will find our initialization code (Keras). If you would like to use our initialization technique
+In this repository, you will find our initialization code (Keras). If you would like to add our initialization technique
 to your project, see 'main/simple_example.py' to learn how to do so. It's a fairly simple process.
