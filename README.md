@@ -1,4 +1,5 @@
-# weight-initialization-relu-and-output-layers
+# Improving Weight Initialization of ReLU and Output Layers
+
 Paper Title: Improving Weight Initialization of ReLU and Output Layers
 
 We introduce a data-dependent weight initialization scheme for ReLU and output layers commonly found in modern neural network
