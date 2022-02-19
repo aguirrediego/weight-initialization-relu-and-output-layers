@@ -2,8 +2,8 @@ from sklearn.cluster import KMeans
 import numpy as np
 import keras
 import os
-from keras.models import load_model
-from keras.models import Model
+from tensorflow.keras.models import load_model
+from tensorflow.keras.models import Model
 from sklearn.neighbors import NearestNeighbors
 
 
@@ -85,46 +85,20 @@ class Utils:
     @staticmethod
     def get_layer_linear_activations(model, layer, x_batch):
 
-        model_path = os.path.join('temp.h5')
-        try:
-            model.save(model_path)
-            inter_model = load_model(model_path)
+        org_act = layer.activation
+        layer.activation = keras.activations.linear
+        inter_model = Model(inputs=model.input, outputs=layer.output)
 
-            inter_layer = inter_model.get_layer(layer.name)
-            inter_layer.activation = keras.activations.linear
+        activations = inter_model.predict(x_batch)
 
-            inter_model.save(model_path)
-            inter_model = load_model(model_path)
-
-            activations = Utils.get_layer_activations(inter_model, inter_model.get_layer(layer.name),
-                                                      x_batch)
-            return activations
-        finally:
-            os.remove(model_path)
-
-    @staticmethod
-    def get_layer_activations(model, layer, x_batch):
-        intermediate_layer_model = Model(
-            inputs=model.get_input_at(0),
-            outputs=layer.get_output_at(0)
-        )
-        activations = intermediate_layer_model.predict(x_batch)
-        del intermediate_layer_model
+        layer.activation = org_act
         return activations
 
     @staticmethod
-    def get_tensor_activations(model, outputs, x_batch):
+    def get_layer_activations(model, layer, x_batch):
+        inter_model = Model(inputs=model.input, outputs=layer.output)
 
-        if model.get_input_at(0) == outputs:
-            return x_batch
-
-        intermediate_layer_model = Model(
-            inputs=model.get_input_at(0),
-            outputs=outputs
-        )
-
-        activations = intermediate_layer_model.predict(x_batch)
-        del intermediate_layer_model
+        activations = inter_model.predict(x_batch)
         return activations
 
 

@@ -2,7 +2,8 @@ from __future__ import print_function
 import numpy as np
 import math
 from utils.utils import Utils
-from keras.layers import Dense, Convolution2D, Convolution1D, Convolution3D, Conv1D, Conv2D, Conv3D
+import tensorflow as tf
+from tensorflow.keras.layers import Dense, Convolution2D, Convolution1D, Convolution3D, Conv1D, Conv2D, Conv3D
 
 
 class WeightInitScheme1Params:
@@ -62,6 +63,7 @@ class WeightInitScheme1:
                 if active_frac is not None:
                     # Get layer's activations before ReLU
                     raw = Utils.get_layer_linear_activations(model, layer, batch)
+
                     raw = raw.reshape((-1, raw.shape[-1]))
 
                     # Sort all columns in the activation matrix

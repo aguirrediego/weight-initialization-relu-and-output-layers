@@ -1,7 +1,7 @@
 import keras
 from keras.datasets import cifar100
 import random
-
+import tensorflow as tf
 
 class CIFAR100:
     num_classes = 100
@@ -15,8 +15,8 @@ class CIFAR100:
     def get_data_set():
 
         (x_train, y_train), (x_test, y_test) = cifar100.load_data()
-        y_train = keras.utils.to_categorical(y_train, CIFAR100.num_classes)
-        y_test = keras.utils.to_categorical(y_test, CIFAR100.num_classes)
+        y_train = tf.keras.utils.to_categorical(y_train, CIFAR100.num_classes)
+        y_test = tf.keras.utils.to_categorical(y_test, CIFAR100.num_classes)
 
         x_train = x_train.astype('float32')
         x_test = x_test.astype('float32')
@@ -36,7 +36,7 @@ class CIFAR100:
             random.seed(random_seed)
 
         (x_train, y_train), (_, _) = cifar100.load_data()
-        y_train = keras.utils.to_categorical(y_train, CIFAR100.num_classes)
+        y_train = tf.keras.utils.np_utils.to_categorical(y_train, CIFAR100.num_classes)
 
         x_train = x_train.astype('float32')
         x_train /= 255
@@ -50,7 +50,7 @@ class CIFAR100:
             random.seed(random_seed)
 
         (_, _), (x_test, y_test) = cifar100.load_data()
-        y_test = keras.utils.to_categorical(y_test, CIFAR100.num_classes)
+        y_test = tf.keras.utils.to_categorical(y_test, CIFAR100.num_classes)
 
         x_test = x_test.astype('float32')
         x_test /= 255
